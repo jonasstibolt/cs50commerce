@@ -1,0 +1,14 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<iframe src="https://giphy.com/embed/jp7jSyjNNz2ansuOS8" width="480" height="400" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/theoffice-jp7jSyjNNz2ansuOS8">via GIPHY</a></p>
+
+<h2>Create New Listing</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Create</button>
+</form>
+
+{% endblock %}
