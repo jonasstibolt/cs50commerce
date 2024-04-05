@@ -23,6 +23,7 @@
             {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    <a href="{% url 'createListing' %}" class="nav-link">Create listing</a>
                 </li>
             {% else %}
                 <li class="nav-item">
