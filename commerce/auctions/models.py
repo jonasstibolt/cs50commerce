@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 from django.contrib.auth.models import AbstractUser
+
 
 class User(AbstractUser):
     # Add any additional fields here
@@ -17,7 +19,7 @@ class AuctionListing(models.Model):
     category = models.CharField(max_length=255, blank=True, null=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings')
     active = models.BooleanField(default=True)
-    end_date = models.DateTimeField()
+    end_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title
