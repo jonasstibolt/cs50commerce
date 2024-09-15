@@ -6,7 +6,7 @@ from django.urls import reverse
 from .forms import ListingForm
 from django.contrib.auth.decorators import login_required
 
-from .models import User
+from .models import User, AuctionListing
 
 
 def index(request):
@@ -76,3 +76,8 @@ def createListing(request):
     else:
         form = ListingForm()
     return render(request, 'auctions/create_listing.html', {'form': form})
+
+
+def listings(request):
+    listings = AuctionListing.objects.filter(active=True)
+    return render(request, 'auction_list.html', {'listings': listings})

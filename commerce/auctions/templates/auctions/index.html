@@ -2,8 +2,22 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-    <iframe src="https://giphy.com/embed/1vZaEGt5m2hNCzRLFg" width="480" height="320" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/MADMONQ-fun-caffeine-brain-booster-1vZaEGt5m2hNCzRLFg">via GIPHY</a></p>
-
+    <ul>
+        {% for listing in listings %}
+            <li>
+                <h3>{{ listing.title }}</h3>
+                <p>{{ listing.description }}</p>
+                <p>Starting Bid: ${{ listing.start_bid }}</p>
+                {% if listing.current_bid %}
+                    <p>Current Bid: ${{ listing.current_bid }}</p>
+                {% endif %}
+                <p>Category: {{ listing.category }}</p>
+                <p>End Date: {{ listing.end_date }}</p>
+            </li>
+        {% empty %}
+            <p>No active auctions at the moment.</p>
+        {% endfor %}
+    </ul>
 
     TODO
 {% endblock %}
