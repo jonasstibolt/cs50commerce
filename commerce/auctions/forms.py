@@ -6,7 +6,7 @@ class ListingForm(forms.ModelForm):
     class Meta:
         model = AuctionListing
         fields = ['title', 'description', 'start_bid', 
-                #   'image_url',
+                  'image_url',
                   'category', 'end_date']
         widgets = {
             'description': forms.Textarea(attrs={'cols': 80, 'rows': 5}),
