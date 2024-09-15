@@ -72,7 +72,10 @@ def createListing(request):
             listing = form.save(commit=False)
             listing.owner = request.user  # Set the current user as the owner
             listing.save()
+            print("Form saved succesfully")
             return redirect('index')  # Redirect to a new URL
+        else:
+            print("Form not saved")
     else:
         form = ListingForm()
     return render(request, 'auctions/create_listing.html', {'form': form})
