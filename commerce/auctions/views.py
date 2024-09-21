@@ -9,8 +9,12 @@ from django.contrib.auth.decorators import login_required
 from .models import User, AuctionListing
 
 
+# def index(request):
+#     return render(request, "auctions/index.html")
+
 def index(request):
-    return render(request, "auctions/index.html")
+    listings = AuctionListing.objects.filter(active=True)
+    return render(request, 'auctions/index.html', {'listings': listings})
 
 
 def login_view(request):
@@ -75,12 +79,9 @@ def createListing(request):
             print("Form saved succesfully")
             return redirect('index')  # Redirect to a new URL
         else:
-            print("Form not saved")
+            print("Form not saved:", form.error)
     else:
         form = ListingForm()
     return render(request, 'auctions/create_listing.html', {'form': form})
 
 
-def listings(request):
-    listings = AuctionListing.objects.filter(active=True)
-    return render(request, 'auction_list.html', {'listings': listings})

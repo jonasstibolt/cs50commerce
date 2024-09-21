@@ -16,7 +16,7 @@ class AuctionListing(models.Model):
     description = models.TextField()
     start_bid = models.DecimalField(max_digits=9, decimal_places=2)
     current_bid = models.DecimalField(max_digits=9, decimal_places=2, null=True, blank=True)
-    image_url = models.URLField(max_length=2048, blank=True, null=True)
+    image_url = models.URLField(max_length=4096, blank=True, null=True)
     category = models.CharField(max_length=255, blank=True, null=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings')
     active = models.BooleanField(default=True)
