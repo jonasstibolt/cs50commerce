@@ -4,6 +4,7 @@
     <h2>Active Listings</h2>
     <ul>
         {% for listing in listings %}
+        <div class="listing">
             <li>
                 <h3>{{ listing.title }}</h3>
                 <p>{{ listing.description }}</p>
@@ -12,8 +13,12 @@
                     <p>Current Bid: ${{ listing.current_bid }}</p>
                 {% endif %}
                 <p>Category: {{ listing.category }}</p>
+                {% if listing.image_url %}
+                <img src="{{ listing.image_url }}" alt="{{ listing.title }} image">
+                {% endif %}
                 <p>End Date: {{ listing.end_date }}</p>
             </li>
+        </div>
         {% empty %}
             <p>No active auctions at the moment.</p>
         {% endfor %}
