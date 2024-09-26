@@ -9,29 +9,35 @@
     </head>
     <body>
         <h1>Auctions</h1>
-        <div class="custom-bg">
+        <div>
             {% if user.is_authenticated %}
                 Signed in as <strong>{{ user.username }}</strong>.
             {% else %}
                 Not signed in.
             {% endif %}
         </div>
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
+        <ul class="nav d-flex">
+            <li class="nav-item home {% if request.resolver_match.url_name == 'index' %}disabled{% endif %}">
+                <a class="nav-link home {% if request.resolver_match.url_name == 'index' %}disabled{% endif %}" href="{% url 'index' %}">Home</a>
             </li>
             {% if user.is_authenticated %}
+            <div class="nav logged-in">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                    <a href="{% url 'createListing' %}" class="nav-link">Create listing</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'logout' %}disabled{% endif %}" href="{% url 'logout' %}">Log Out</a>
                 </li>
+                <li class="nav-item">
+                    <a href="{% url 'createListing' %}" class="nav-link {% if request.resolver_match.url_name == 'createListing' %}disabled{% endif %}">Create listing</a>
+                </li>
+            </div>
             {% else %}
+            <div class="nav logged-out">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'login' %}disabled{% endif %}" href="{% url 'login' %}">Log In</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'register' %}disabled{% endif %}" href="{% url 'register' %}">Register</a>
                 </li>
+            </div>
             {% endif %}
         </ul>
         <hr>
