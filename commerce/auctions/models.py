@@ -7,9 +7,8 @@ from django.contrib.auth.models import User
 
 
 # class User(AbstractUser):
-#     # # Add any additional fields here
-#     # pass
-#
+#     pass
+
 
 class AuctionListing(models.Model):
     title = models.CharField(max_length=255)
