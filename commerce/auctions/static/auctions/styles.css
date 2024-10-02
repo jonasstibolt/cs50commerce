@@ -3,10 +3,6 @@ body {
     background-color: rgb(154, 154, 154);
 }
 
-h2 {
-    font-style: italic;
-}
-
 ul {
     padding: 10px;
     margin: 10px;
@@ -38,6 +34,10 @@ ul {
     
 }
 
+.listing h2 {
+    font-style: normal;
+}
+
 .listing img {
     max-width: 300px; 
     max-height: 200px;
@@ -52,4 +52,33 @@ ul {
     pointer-events: none;  /* This disables the link functionality */
     cursor: default;       /* Changes the cursor to default */
     text-decoration: none; /* Remove underline to show it's not a link */
+}
+
+.listing .current_bid {
+    display: inline-block;
+    border: 1px solid rgb(65, 47, 45);
+    font-weight: bold;
+    padding: 3px;
+    font-style: normal;
+}
+
+.bid {
+    padding: 40px;
+    margin-bottom: 30px;
+    border: 1px solid beige;
+    border-radius: 20px;
+}
+
+.comments {
+    padding: 40px;
+    border: 1px solid beige;
+    border-radius: 20px;
+
+}
+
+.comment li {
+    list-style: none;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
 }

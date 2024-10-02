@@ -1,7 +1,59 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Showing entry: {{ listing.title }}</h2>
+<div class="listing">
+    <h2>
+        Showing entry: {{ listing.title }}
+    </h2>
+            <p>{{ listing.description }}</p>
+            <p>Starting Bid: ${{ listing.start_bid }}</p>
+            {% if listing.current_bid %}
+                <p class="current_bid">Current Bid: ${{ listing.current_bid }}</p>
+            {% endif %}
+            <p>Category: {{ listing.category }}</p>
+            {% if listing.image_url %}
+            <img src="{{ listing.image_url }}" alt="{{ listing.title }} image">
+            {% endif %}
+            <p>End Date: {{ listing.end_date }}</p>
+    </div>
+
+<div class="bid">
+    <h2>Make a Bid</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ bid_form.as_p }}
+        <button type="submit" name="submit_bid">Submit</button>
+    </form>
+
+</div>
+
+<div class="comments">
+    <h2>Comments:</h2>
+    <ul>    
+        <div class="comment">
+            {% for comment in comments %}
+            <li>
+                <p>{{ comment.user }}:</p>
+                <p>{{ comment.comment }}</p>
+            </li>
+        </div>
+    </div>
+    {% endfor %}
+    {% empty %}
+        <p>No active comments at the moment.</p>
+    {% endempty %}
+    </ul>
+</diçv>
+
+<div class="makeComment">
+    <h2>Comment on this listing</h2>
+    <form method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit" name="submit_comment">Submit</button>
+    </form>
+</div>
 
 
 {% endblock %}

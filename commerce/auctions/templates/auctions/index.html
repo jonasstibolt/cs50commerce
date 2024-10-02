@@ -12,7 +12,7 @@
                     <p>{{ listing.description }}</p>
                     <p>Starting Bid: ${{ listing.start_bid }}</p>
                     {% if listing.current_bid %}
-                        <p>Current Bid: ${{ listing.current_bid }}</p>
+                        <p class="current_bid">Current Bid: ${{ listing.current_bid }}</p>
                     {% endif %}
                     <p>Category: {{ listing.category }}</p>
                     {% if listing.image_url %}

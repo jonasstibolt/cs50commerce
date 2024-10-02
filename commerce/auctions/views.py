@@ -7,6 +7,7 @@ from .forms import ListingForm
 from django.contrib.auth.decorators import login_required
 
 from .models import User, AuctionListing
+from .forms import BidForm, CommentForm
 
 
 # def index(request):
@@ -82,8 +83,54 @@ def createListing(request):
             print("Form not saved:", form.error)
     else:
         form = ListingForm()
-    return render(request, 'auctions/create_listing.html', {'form': form})
+    return render(request, 'auctions/create_listing.html', {'listing_form': form})
 
 def listing(request, listing_id): #TODO: Make each listing accessible with their unique link
     listing = get_object_or_404(AuctionListing, id=listing_id)
-    return render(request, 'auctions/listing.html', {'listing': listing})
+    
+    comments = listing.comments.all()
+    bids = listing.current_bid
+
+    if request.method == "POST":
+        if 'submit_comment' in request.POST:
+            comment_form = CommentForm(request.POST)
+            bid_form = BidForm()
+            if comment_form.is_valid():
+                new_comment = comment_form.save(commit=False)
+                new_comment.listing = listing
+                new_comment.user = request.user
+                new_comment.save()
+                return redirect('listing', listing_id=listing.id)
+        
+        elif 'submit_bid' in request.POST:
+            bid_form = BidForm(request.POST or None, listing=listing)
+            comment_form = CommentForm()
+            if bid_form.is_valid():
+                new_bid = bid_form.save(commit=False)
+                new_bid.listing = listing
+                new_bid.user = request.user
+                new_bid.save()
+
+                listing.current_bid = new_bid.bid_amount
+                listing.save()
+
+                return redirect('listing', listing_id=listing.id)
+
+  
+    else:
+        comment_form = CommentForm()
+        bid_form = BidForm(listing=listing)
+        
+
+
+    
+    return render(request, 'auctions/listing.html', 
+              {'listing': listing, 
+              'comments': comments, 
+              'comment_form': comment_form, 
+              'bid_form': bid_form}
+              )
+
+
+
+
