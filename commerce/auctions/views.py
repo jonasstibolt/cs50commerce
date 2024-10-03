@@ -17,6 +17,9 @@ def index(request):
     listings = AuctionListing.objects.filter(active=True)
     return render(request, 'auctions/index.html', {'listings': listings})
 
+def test_view(request):
+    return render(request, 'auctions/test.html')
+
 
 def login_view(request):
     if request.method == "POST":

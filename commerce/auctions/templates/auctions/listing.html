@@ -31,20 +31,19 @@
 <div class="comments">
     <h2>Comments:</h2>
     <ul>    
+        {% for comment in comments %}
         <div class="comment">
-            {% for comment in comments %}
             <li>
                 <p>{{ comment.user }}:</p>
                 <p>{{ comment.comment }}</p>
             </li>
         </div>
-    </div>
-    {% endfor %}
-    {% empty %}
-        <p>No active comments at the moment.</p>
-    {% endempty %}
+        {% empty %}
+            <p>No active comments at the moment.</p>
+        {% endfor %}
     </ul>
-</diçv>
+</div>
+
 
 <div class="makeComment">
     <h2>Comment on this listing</h2>
