@@ -5,8 +5,11 @@
 <h1>test page</h1>
 
 <a class="like-button">
-    <i class="material-icons not-liked bouncy">favorite_border</i>
-    <i class="material-icons is-liked bouncy">favorite</i>
+    {% if icon.is_liked %}
+    <i class="material-icons like-button">favorite</i>
+    {% else %}
+    <i class="material-icons like-button">favorite_border</i>
+    {% endif %}
     <span class="like-overlay"></span>
   </a>
 

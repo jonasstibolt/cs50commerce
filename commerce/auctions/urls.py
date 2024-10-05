@@ -7,6 +7,6 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path('create', views.createListing, name='createListing'), #hvor skal man have / efter create?
     path("register", views.register, name="register"),
-    path("<int:listing_id>", views.listing, name="listing"),
+    path("listing/<int:listing_id>", views.listing, name="listing"),
     path("test", views.test_view, name="test"),
 ]
