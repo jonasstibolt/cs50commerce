@@ -7,10 +7,9 @@ from .forms import ListingForm
 from django.contrib.auth.decorators import login_required
 from .models import User, AuctionListing, Like, Comment
 from .forms import BidForm, CommentForm
+from django.contrib.contenttypes.models import ContentType
 
 
-# def index(request):
-#     return render(request, "auctions/index.html")
 
 def index(request):
     listings = AuctionListing.objects.filter(active=True)
@@ -141,18 +140,23 @@ def listing(request, listing_id):
               )
 
 
-# def like(request, content_type, object_id):
+def like(request, content_type, object_id):
 
-#     user = request.user
-#     like, created = Like.objects.get_or_create(user=user, content_type=content_type, id=object_id)
+    user = request.user
+    content_type_object = ContentType.objects.get(model=content_type)
+    like, created = Like.objects.get_or_create(user=user, content_type_object, id=object_id)
 
-#     if content_type == AuctionListing:
-#         content_object = get_object_or_404(AuctionListing, id=object_id)
-#     elif content_type == Comment:
-#         content_object = get_object_or_404(Comment, id=object_id)
-#     else:
-#         return redirect('error')
+    if content_type_object.model == 'auctionlisting':
+        content_object = get_object_or_404(AuctionListing, id=object_id)
+    elif content_type_object.model == 'comment':
+        content_object = get_object_or_404(Comment, id=object_id)
+    else:
+        return redirect('error')
     
+    if not created:
+        like.delete()
+        print(f'like deleted on:{content_object.id} by {user.username}')
+    else:
+        print(f'{user.username} liked :{content_object.id}')
 
-#     if created:
-
+    return render('auctions/listing.html')
