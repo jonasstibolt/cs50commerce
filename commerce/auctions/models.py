@@ -13,6 +13,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 #     pass
 
 
+
 class AuctionListing(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()

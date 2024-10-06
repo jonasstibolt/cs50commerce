@@ -5,8 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .forms import ListingForm
 from django.contrib.auth.decorators import login_required
-
-from .models import User, AuctionListing
+from .models import User, AuctionListing, Like, Comment
 from .forms import BidForm, CommentForm
 
 
@@ -19,6 +18,9 @@ def index(request):
 
 def test_view(request):
     return render(request, 'auctions/test.html')
+
+def error_view(request):
+    return render(request, 'auctions/error.html')
 
 
 def login_view(request):
@@ -88,7 +90,7 @@ def createListing(request):
         form = ListingForm()
     return render(request, 'auctions/create_listing.html', {'listing_form': form})
 
-def listing(request, listing_id): #TODO: Make each listing accessible with their unique link
+def listing(request, listing_id):
     listing = get_object_or_404(AuctionListing, id=listing_id)
     
     comments = listing.comments.all()
@@ -106,7 +108,7 @@ def listing(request, listing_id): #TODO: Make each listing accessible with their
                 return redirect('listing', listing_id=listing.id)
         
         elif 'submit_bid' in request.POST:
-            bid_form = BidForm(request.POST or None, listing=listing)
+            bid_form = BidForm(request.POST, listing=listing)
             comment_form = CommentForm()
             if bid_form.is_valid():
                 new_bid = bid_form.save(commit=False)
@@ -117,9 +119,12 @@ def listing(request, listing_id): #TODO: Make each listing accessible with their
                 listing.current_bid = new_bid.bid_amount
                 listing.save()
 
-                return redirect('listing', listing_id=listing.id)
+                print(f"New bid: {listing.current_bid}")
+                return redirect('listing', listing_id=listing.id)                 
 
-  
+            if not bid_form.is_valid():
+                print(bid_form.errors)
+
     else:
         comment_form = CommentForm()
         bid_form = BidForm(listing=listing)
@@ -131,9 +136,23 @@ def listing(request, listing_id): #TODO: Make each listing accessible with their
               {'listing': listing, 
               'comments': comments, 
               'comment_form': comment_form, 
-              'bid_form': bid_form}
+              'bid_form': bid_form,
+              'bids' : bids,}
               )
 
 
+# def like(request, content_type, object_id):
 
+#     user = request.user
+#     like, created = Like.objects.get_or_create(user=user, content_type=content_type, id=object_id)
+
+#     if content_type == AuctionListing:
+#         content_object = get_object_or_404(AuctionListing, id=object_id)
+#     elif content_type == Comment:
+#         content_object = get_object_or_404(Comment, id=object_id)
+#     else:
+#         return redirect('error')
+    
+
+#     if created:
 
